@@ -2,30 +2,88 @@
 #include <WiFi.h>
 #include <WebServer.h>
 
-const char *ssid = "ESP32-Hotspot";
+const char *ssid = "ESP_AP";
 const char *password = "12345678";
 
 WebServer szero(80);
+
+void kapcs(){                     //egy void
+  digitalWrite(2,HIGH);
+  Serial.println("bekapcsolt");
+  szero.send(200,"text/plain","Bekapcs");
+}
+
+void kikapcs(){
+  digitalWrite(2,LOW);
+  Serial.println("kikapcsolt");
+  szero.send(200,"text/plain","Kikapcs");
+}
+
+void testkapcs(){
+  digitalWrite(2,HIGH);
+  Serial.println("test");
+  szero.send(200,"text/plain","test");
+}
+
 
 void handleRoot(){
   //szero.send(200, "text/html", "<h1>Üdv az ESP32-n!</h1><p>Itt lesz majd a WiFi választó oldal</p>");
 
   //-----------------------------------------------------------
   //ebben kehet megadni a weboldal kódját !!!!
-  //1.gombok beolvasása
+  //1.gombok beolvasása ✅ 
+  //  -Létre kell hozni egy voidot
+  //  -Utána a a setup ban a szerverre küldjük  (server.on stb....)
+  //  -Utoljára a html kódban össze kötjük
   //2.szöveg beolvasás
   //3. beérkező adatok elmentése és kiírása
   //-----------------------------------------------------------
   String html = R"rawliteral(       
-  <h1>Szia!</h1>
+ <!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP_AP</title>
+    <script>
+    
+    function ledkapcs(){            //a html hez való hozzáadás
+  fetch("/bekapcs");
+    }
+
+      function ledkikapcs(){
+  fetch("/kikapcs");
+    }
+
+    function test(){
+    fetch("/test");
+    }
+
+    </script>
+</head>
+<body>
+
+<h1>AP Tanulása</h1>
+<button onclick = "ledkapcs()">BE</button>
+<button onclick = "ledkikapcs()">KI</button>
+<button onclick = "test()">TEST GOMB</button>
+
+    
+</body>
+</html>
+
+ 
+  
   
   )rawliteral" ;
   szero.send(200,"text/html",html);
+  //szero.on("/led_kapcs",kapcs);
 
 }
 
 void setup() {
   Serial.begin(115200);
+  pinMode(2,OUTPUT);
 
   // Access Point indítása
   WiFi.softAP(ssid, password);
@@ -34,6 +92,12 @@ void setup() {
   Serial.print("IP címe: ");
   Serial.println(WiFi.softAPIP());
   szero.on("/",handleRoot);
+  szero.on("/bekapcs",kapcs);     //szerverre való küldés
+   szero.on("/kikapcs",kikapcs);
+   szero.on("/test",testkapcs);
+
+
+
   szero.begin();
   Serial.printf("a webserver elindult");
 }
