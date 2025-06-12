@@ -1,6 +1,9 @@
 
 
   1.gombok beolvasása ✅ <br>
+  <ol>
+    <li> -Létre kell hozni egy voidot</li>
+  </ol>
     -Létre kell hozni egy voidot
     -Utána a a setup ban a szerverre küldjük  (server.on stb....)
     -Utoljára a html kódban össze kötjük
