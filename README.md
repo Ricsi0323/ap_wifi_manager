@@ -2,11 +2,11 @@
 
   1.gombok beolvasása ✅ <br>
   <ol>
-    <li> -Létre kell hozni egy voidot</li>
+    <li>Létre kell hozni egy voidot</li>
+    <li>Utána a a setup ban a szerverre küldjük  (server.on stb....)</li>
+    <li>Utoljára a html kódban össze kötjük</li>
   </ol>
-    -Létre kell hozni egy voidot
-    -Utána a a setup ban a szerverre küldjük  (server.on stb....)
-    -Utoljára a html kódban össze kötjük
+   
   2.szöveg beolvasás
   3. beérkező adatok elmentése és kiírása
   
