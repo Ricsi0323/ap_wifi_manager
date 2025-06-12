@@ -1,6 +1,6 @@
 
 
-  1.gombok beolvasása ✅ 
+  1.gombok beolvasása ✅ <br>
     -Létre kell hozni egy voidot
     -Utána a a setup ban a szerverre küldjük  (server.on stb....)
     -Utoljára a html kódban össze kötjük
