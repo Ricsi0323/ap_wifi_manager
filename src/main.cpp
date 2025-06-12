@@ -36,6 +36,7 @@ void setup() {
   szero.on("/",handleRoot);
   szero.begin();
   Serial.printf("a webserver elindult");
+
 }
 
 void loop() {
