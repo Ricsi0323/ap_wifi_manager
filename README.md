@@ -7,6 +7,7 @@
     <li>Utoljára a html kódban össze kötjük</li>
   </ol>
    
-  2.szöveg beolvasás <br>
+  2.szöveg beolvasás ✅ <br> 
+  
   3. beérkező adatok elmentése és kiírása
   

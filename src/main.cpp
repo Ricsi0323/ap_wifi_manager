@@ -97,8 +97,14 @@ void handleRoot() {
 
 
     <h2>Írj be valamit</h2>
-<input type="text" id="szoveg" placeholder="Írj be valamit...">
+<input type="text" id="szoveg" >
 <button onclick="inputszoveg()">Küldés</button>
+
+
+
+
+<h1>Közeli Wifi hálózatok</h1>
+
 
     
 </body>
@@ -108,6 +114,21 @@ void handleRoot() {
   
   
   )rawliteral";
+
+    int halozatok = WiFi.scanNetworks(); // hálózatok beolvasása
+    if (halozatok == 0) {
+        Serial.println("Nincs elérhető hálózat");
+    } else {
+        Serial.printf("%d hálózat található\n", halozatok);
+        for (int i = 0; i < halozatok; i++) {
+            html += "<p>" + WiFi.SSID(i) + "</p>"; // hozzáadjuk a html-hez
+            Serial.println(WiFi.SSID(i)); // kiírjuk a soros monitorra
+        }
+    }
+    html += "<br><button onclick=\"location.reload()\">Frissítés</button>"; // frissítés gomb hozzáadása
+    html += "</body></html>"; // html lezárása
+
+
     szero.send(200, "text/html", html);
     // szero.on("/led_kapcs",kapcs);
 }
@@ -121,6 +142,7 @@ void setup() {
 
     Serial.println("Access Point létrehozva!");
     Serial.print("IP címe: ");
+    WiFi.mode(WIFI_AP_STA); // AP mód beállítása
     Serial.println(WiFi.softAPIP());
     szero.on("/", handleRoot);
     szero.on("/bekapcs", kapcs); // szerverre való küldés
